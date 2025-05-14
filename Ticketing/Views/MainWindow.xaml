@@ -1,0 +1,33 @@
+﻿<Window x:Class="Ticketing.Views.MainView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Ticketing.Views"
+        xmlns:viewModels="clr-namespace:Ticketing.ViewModels"
+        mc:Ignorable="d"
+        Title="Accueil Ticketing" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.DataContext>
+        <viewModels:MainViewModel />
+    </Window.DataContext>
+
+    <Grid>
+        <Grid Height="100" VerticalAlignment="Top" Background="#FFEEEEEE">
+            <Border Width="150" Height="80" Margin="10" Background="LightGray" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <TextBlock Text="LOGO" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+            </Border>
+        </Grid>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0 0 0 40">
+            <Button Content="Créer un ticket"
+                    Width="200" Height="50" Margin="20"
+                    Command="{Binding OuvrirTicketCommand}"/>
+
+            <Button Content="Admin Login"
+                    Width="200" Height="50" Margin="20"
+                    Command="{Binding OpenAdminLoginCommand}"/>
+        </StackPanel>
+    </Grid>
+</Window>
