@@ -1,19 +1,21 @@
 using System;
 using System.Linq;
 using System.Windows;
-using Ticketing.Data; // Namespace de ApplicationDbContext
-using Ticketing.Models; // Namespace de ton modèle Utilisateur
+using Ticketing.Data;
+using Ticketing.Models;
 
 namespace Ticketing.Views
 {
     public partial class AdminLoginView : Window
     {
         private readonly AppDbContext _context;
+        public string Email { get; set; }
 
         public AdminLoginView()
         {
             InitializeComponent();
-            _context = new AppDbContext(); // à remplacer par une injection si besoin
+            _context = new AppDbContext();
+            DataContext = this;
         }
 
         private void OnLoginClicked(object sender, RoutedEventArgs e)
@@ -27,6 +29,12 @@ namespace Ticketing.Views
                 return;
             }
 
+            if (!ValidateEmail(email))
+            {
+                ShowError("L'adresse email doit se terminer par @gmail.com.");
+                return;
+            }
+
             if (VerifyCredentials(email, password))
             {
                 ErrorMessage.Visibility = Visibility.Collapsed;
@@ -34,9 +42,13 @@ namespace Ticketing.Views
             }
             else
             {
-                ShowError("Compte non trouvé. Vous pouvez en créer un.");
-                CreateAccountButton.Visibility = Visibility.Visible;
+                ShowError("Email ou mot de passe incorrect.");
             }
+        }
+
+        private bool ValidateEmail(string email)
+        {
+            return email.Trim().EndsWith("@gmail.com", StringComparison.OrdinalIgnoreCase);
         }
 
         private bool VerifyCredentials(string email, string password)
@@ -53,43 +65,11 @@ namespace Ticketing.Views
             }
         }
 
-        private void OnCreateAccountClicked(object sender, RoutedEventArgs e)
+        private void OnOpenCreateAccountClicked(object sender, RoutedEventArgs e)
         {
-            string email = EmailTextBox.Text;
-            string password = PasswordBox.Password;
-
-            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
-            {
-                ShowError("Veuillez remplir les champs.");
-                return;
-            }
-
-            try
-            {
-                bool exists = _context.Utilisateur.Any(u => u.Email == email);
-                if (exists)
-                {
-                    ShowError("Ce compte existe déjà.");
-                    return;
-                }
-
-                var newUser = new Utilisateur
-                {
-                    Email = email,
-                    MDP = password,
-                    Rol = "Admin"
-                };
-
-                _context.Utilisateur.Add(newUser);
-                _context.SaveChanges();
-
-                MessageBox.Show("Compte créé avec succès !");
-                OpenAdminDashboard();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Erreur création de compte : {ex.Message}");
-            }
+            var createAccountWindow = new CreateAccountView();
+            createAccountWindow.Show();
+            this.Close();
         }
 
         private void ShowError(string message)
@@ -102,6 +82,13 @@ namespace Ticketing.Views
         {
             var dashboard = new AdminDashboardView();
             dashboard.Show();
+            this.Close();
+        }
+
+        private void OnRetourClicked(object sender, RoutedEventArgs e)
+        {
+            var mainWindow = new MainView();
+            mainWindow.Show();
             this.Close();
         }
     }

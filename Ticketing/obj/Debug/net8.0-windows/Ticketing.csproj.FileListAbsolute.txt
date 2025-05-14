@@ -152,3 +152,5 @@ C:\Users\pepit\RiderProjects\Ticketing\Ticketing\obj\Debug\net8.0-windows\Views\
 C:\Users\pepit\RiderProjects\Ticketing\Ticketing\obj\Debug\net8.0-windows\Views\AdminLoginView.baml
 C:\Users\pepit\RiderProjects\Ticketing\Ticketing\obj\Debug\net8.0-windows\Views\AdminDashboardView.g.cs
 C:\Users\pepit\RiderProjects\Ticketing\Ticketing\obj\Debug\net8.0-windows\Views\AdminLoginView.g.cs
+C:\Users\pepit\RiderProjects\Ticketing\Ticketing\obj\Debug\net8.0-windows\Views\CreateAccountView.g.cs
+C:\Users\pepit\RiderProjects\Ticketing\Ticketing\obj\Debug\net8.0-windows\Views\CreateAccountView.baml

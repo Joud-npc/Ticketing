@@ -1,25 +1,51 @@
 <Window x:Class="Ticketing.Views.AdminLoginView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Connexion Admin" Height="300" Width="400"
+        xmlns:commands="clr-namespace:Ticketing.Commands"
+        Title="Espace Utilisateur" Height="450" Width="400"
         WindowStartupLocation="CenterScreen">
     
-    <StackPanel Margin="20" VerticalAlignment="Center">
-        <TextBlock Text="Email :" />
-        <TextBox x:Name="EmailTextBox" Margin="0,5"/>
+    <Grid>
+        <TabControl>
+            <TabItem Header="Connexion">
+                <StackPanel Margin="20" VerticalAlignment="Center">
+                    <TextBlock Text="Email :" />
+                    <TextBox x:Name="EmailTextBox" Margin="0,5">
+                        <TextBox.Text>
+                            <Binding Path="Email" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" ValidatesOnExceptions="True">
+                                <Binding.ValidationRules>
+                                    <commands:GmailValidationRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
 
-        <TextBlock Text="Mot de passe :" Margin="10,10,0,0"/>
-        <PasswordBox x:Name="PasswordBox" Margin="0,5"/>
+                    <TextBlock Text="Mot de passe :" Margin="0,10,0,0"/>
+                    <PasswordBox x:Name="PasswordBox" Margin="0,5"/>
 
-        <TextBlock x:Name="ErrorMessage" Foreground="Red" Visibility="Collapsed" Margin="0,10"/>
+                    <TextBlock x:Name="ErrorMessage" Foreground="Red" Visibility="Collapsed" Margin="0,10"/>
 
-        <Button Content="Connexion" Click="OnLoginClicked" Margin="0,10" Height="30"/>
+                    <Button Content="Connexion" Click="OnLoginClicked" Margin="0,10" Height="30"/>
+                    <Button Content="Retour" Click="OnRetourClicked" Margin="0,10" Height="30"/>
+                </StackPanel>
+            </TabItem>
+            
+            <TabItem Header="Créer un compte">
+                <StackPanel Margin="20" VerticalAlignment="Center">
+                    <TextBlock Text="Email :" />
+                    <TextBox x:Name="CreateEmailTextBox" Margin="0,5">
+                        <TextBox.Text>
+                            <Binding Path="NewEmail" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" ValidatesOnExceptions="True">
+                                <Binding.ValidationRules>
+                                    <commands:GmailValidationRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
 
-        <Button x:Name="CreateAccountButton"
-                Content="Créer un compte"
-                Click="OnCreateAccountClicked"
-                Visibility="Collapsed"
-                Margin="0,0,0,10"
-                Height="30"/>
-    </StackPanel>
+                    <TextBlock Text="Mot de passe :" Margin="0,10,0,0"/>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+    </Grid>
 </Window>

@@ -1,0 +1,42 @@
+<Window x:Class="Ticketing.Views.CreateAccountView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:commands="clr-namespace:Ticketing.Commands"
+        Title="Création de compte" Height="400" Width="400"
+        WindowStartupLocation="CenterScreen">
+    
+    <StackPanel Margin="20" VerticalAlignment="Center">
+        <TextBlock Text="Création d'un nouveau compte" FontSize="16" FontWeight="Bold" Margin="0,0,0,20" 
+                   HorizontalAlignment="Center"/>
+
+        <TextBlock Text="Email :" />
+        <TextBox x:Name="EmailTextBox" Margin="0,5">
+            <TextBox.Text>
+                <Binding Path="Email" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" ValidatesOnExceptions="True">
+                    <Binding.ValidationRules>
+                        <commands:GmailValidationRule />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
+        <TextBlock Text="Mot de passe :" Margin="0,10,0,0"/>
+        <PasswordBox x:Name="PasswordBox" Margin="0,5"/>
+
+        <TextBlock Text="Confirmer le mot de passe :" Margin="0,10,0,0"/>
+        <PasswordBox x:Name="ConfirmPasswordBox" Margin="0,5"/>
+
+        <TextBlock Text="Rôle :" Margin="0,10,0,0"/>
+        <ComboBox x:Name="RoleComboBox" Margin="0,5">
+            <ComboBoxItem Content="Admin" IsSelected="True"/>
+            <ComboBoxItem Content="Utilisateur"/>
+        </ComboBox>
+
+        <TextBlock x:Name="ErrorMessage" Foreground="Red" Visibility="Collapsed" Margin="0,10"/>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15">
+            <Button Content="Créer le compte" Click="OnCreateAccountClicked" Width="120" Height="30" Margin="0,0,10,0"/>
+            <Button Content="Annuler" Click="OnCancelClicked" Width="120" Height="30" Margin="10,0,0,0"/>
+        </StackPanel>
+    </StackPanel>
+</Window>

@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 C:\Users\pepit\RiderProjects\Ticketing\Ticketing\App.xaml
-4-807337440
+51890080448
 
-14-720802704
+15-213704442
 2281096087927
-Views\AdminDashboardView.xaml;Views\AdminLoginView.xaml;Views\MainWindow.xaml;Views\TickeyView.xaml;
+Views\AdminDashboardView.xaml;Views\AdminLoginView.xaml;Views\CreateAccountView.xaml;Views\MainWindow.xaml;Views\TickeyView.xaml;
 
 False
 
