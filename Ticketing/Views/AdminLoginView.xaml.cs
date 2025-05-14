@@ -19,7 +19,6 @@ namespace Ticketing.Views
             InitializeComponent();
             _context = new AppDbContext();
             
-            // Tenter de créer la base de données si elle n'existe pas
             try
             {
                 _context.Database.EnsureCreated();
@@ -107,21 +106,22 @@ namespace Ticketing.Views
         
         private void OnCreateAccountClicked(object sender, RoutedEventArgs e)
         {
+            string nom = CreateNomTextBox.Text;
+            string prenom = CreatePrenomTextBox.Text;
             string email = CreateEmailTextBox.Text;
             string password = CreatePasswordBox.Password;
             string confirmPassword = ConfirmPasswordBox.Password;
-            
-            // Vérifier si un élément est sélectionné dans le ComboBox
+
             if (RoleComboBox.SelectedItem == null)
             {
                 ShowCreateError("Veuillez sélectionner un rôle.");
                 return;
             }
-            
+
             string role = ((ComboBoxItem)RoleComboBox.SelectedItem).Content.ToString();
 
-            // Validation des champs
-            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password) || string.IsNullOrWhiteSpace(confirmPassword))
+            if (string.IsNullOrWhiteSpace(nom) || string.IsNullOrWhiteSpace(prenom) ||
+                string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password) || string.IsNullOrWhiteSpace(confirmPassword))
             {
                 ShowCreateError("Tous les champs sont obligatoires.");
                 return;
@@ -141,7 +141,6 @@ namespace Ticketing.Views
 
             try
             {
-                // Vérifier si l'utilisateur existe déjà
                 bool exists = _context.Utilisateur.Any(u => u.Email == email);
                 if (exists)
                 {
@@ -149,28 +148,24 @@ namespace Ticketing.Views
                     return;
                 }
 
-                // Créer le nouvel utilisateur avec les champs requis
                 var newUser = new Utilisateur
                 {
+                    Nom = nom,
+                    Prenom = prenom,
                     Email = email,
                     MDP = password,
                     Rol = role
                 };
 
-                // Enregistrer dans la BDD
                 _context.Utilisateur.Add(newUser);
-                
                 try
                 {
                     _context.SaveChanges();
                     MessageBox.Show("Compte créé avec succès !", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
-                    
-                    // Rediriger vers le tableau de bord admin
                     OpenAdminDashboard();
                 }
                 catch (DbUpdateException dbEx)
                 {
-                    // Afficher les détails de l'erreur de la base de données
                     var innerEx = dbEx.InnerException?.Message ?? dbEx.Message;
                     MessageBox.Show($"Erreur de base de données : {innerEx}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
@@ -180,5 +175,6 @@ namespace Ticketing.Views
                 MessageBox.Show($"Erreur lors de la création du compte : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
     }
 }

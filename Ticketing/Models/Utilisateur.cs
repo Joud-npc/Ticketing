@@ -9,17 +9,25 @@ namespace Ticketing.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id_Utilisateur { get; set; }
-        
+
         [Required]
-        [StringLength(100)]
+        [StringLength(50)]
+        public string Nom { get; set; }
+
+        [Required]
+        [StringLength(50)]
+        public string Prenom { get; set; }
+
+        [Required]
+        [StringLength(50)]
         public string Email { get; set; }
-        
+
         [Required]
-        [StringLength(100)]
+        [StringLength(50)]
         public string MDP { get; set; }
-        
+
         [Required]
-        [StringLength(20)]
+        [StringLength(50)]
         public string Rol { get; set; }
     }
 }

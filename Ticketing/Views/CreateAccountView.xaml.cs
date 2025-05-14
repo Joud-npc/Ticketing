@@ -21,13 +21,18 @@ namespace Ticketing.Views
 
         private void OnCreateAccountClicked(object sender, RoutedEventArgs e)
         {
+            string nom = NomTextBox.Text;
+            string prenom = PrenomTextBox.Text;
             string email = EmailTextBox.Text;
             string password = PasswordBox.Password;
             string confirmPassword = ConfirmPasswordBox.Password;
             string role = ((ComboBoxItem)RoleComboBox.SelectedItem).Content.ToString();
 
-            // Validation des champs
-            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password) || string.IsNullOrWhiteSpace(confirmPassword))
+            if (string.IsNullOrWhiteSpace(nom) ||
+                string.IsNullOrWhiteSpace(prenom) ||
+                string.IsNullOrWhiteSpace(email) ||
+                string.IsNullOrWhiteSpace(password) ||
+                string.IsNullOrWhiteSpace(confirmPassword))
             {
                 ShowError("Tous les champs sont obligatoires.");
                 return;
@@ -47,7 +52,6 @@ namespace Ticketing.Views
 
             try
             {
-                // Vérifier si l'utilisateur existe déjà
                 bool exists = _context.Utilisateur.Any(u => u.Email == email);
                 if (exists)
                 {
@@ -55,21 +59,20 @@ namespace Ticketing.Views
                     return;
                 }
 
-                // Créer le nouvel utilisateur
                 var newUser = new Utilisateur
                 {
+                    Nom = nom,
+                    Prenom = prenom,
                     Email = email,
                     MDP = password,
                     Rol = role
                 };
 
-                // Enregistrer dans la BDD
                 _context.Utilisateur.Add(newUser);
                 _context.SaveChanges();
 
                 MessageBox.Show("Compte créé avec succès !", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
-                
-                // Retourner à la page de connexion
+
                 var loginView = new AdminLoginView();
                 loginView.Show();
                 this.Close();
