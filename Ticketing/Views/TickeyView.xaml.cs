@@ -1,6 +1,5 @@
 using System.Windows;
 
-
 namespace Ticketing.Views
 {
     public partial class TicketView : Window
@@ -8,7 +7,7 @@ namespace Ticketing.Views
         public TicketView()
         {
             InitializeComponent();
-            DataContext = new TicketViewModel();
+            DataContext = new Ticketing.ViewModels.TicketViewModel();
         }
         
         private void OnRetourClicked(object sender, RoutedEventArgs e)
