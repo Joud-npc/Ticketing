@@ -44,6 +44,21 @@
                     </TextBox>
 
                     <TextBlock Text="Mot de passe :" Margin="0,10,0,0"/>
+                    <PasswordBox x:Name="CreatePasswordBox" Margin="0,5"/>
+                    
+                    <TextBlock Text="Confirmer le mot de passe :" Margin="0,10,0,0"/>
+                    <PasswordBox x:Name="ConfirmPasswordBox" Margin="0,5"/>
+                    
+                    <TextBlock Text="Rôle :" Margin="0,10,0,0"/>
+                    <ComboBox x:Name="RoleComboBox" Margin="0,5">
+                        <ComboBoxItem Content="Admin" IsSelected="True"/>
+                        <ComboBoxItem Content="Utilisateur"/>
+                    </ComboBox>
+                    
+                    <TextBlock x:Name="CreateErrorMessage" Foreground="Red" Visibility="Collapsed" Margin="0,10"/>
+                    
+                    <Button Content="Créer le compte" Click="OnCreateAccountClicked" Margin="0,10" Height="30"/>
+                    <Button Content="Retour" Click="OnRetourClicked" Margin="0,10" Height="30"/>
                 </StackPanel>
             </TabItem>
         </TabControl>
