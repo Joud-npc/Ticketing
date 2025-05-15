@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using Ticketing.Data;
 using Ticketing.Models;
 using Microsoft.EntityFrameworkCore;
+using YourProject.Views;
 
 namespace Ticketing.Views
 {
