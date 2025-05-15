@@ -1,4 +1,4 @@
-// Modification du ViewModel pour AdminDashboard pour afficher et gérer les tickets
+// ViewModel pour AdminDashboard pour afficher et gérer les tickets
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -20,6 +20,7 @@ namespace Ticketing.ViewModels
         private string _searchText;
         private string _selectedStatus;
         private string _newStatus;
+        private bool _logoutRequested;
 
         public ObservableCollection<Ticket> Tickets
         {
@@ -74,6 +75,16 @@ namespace Ticketing.ViewModels
             }
         }
 
+        public bool LogoutRequested
+        {
+            get => _logoutRequested;
+            set
+            {
+                _logoutRequested = value;
+                OnPropertyChanged();
+            }
+        }
+
         public bool IsTicketSelected => SelectedTicket != null;
 
         public ObservableCollection<string> Statuts { get; } = new ObservableCollection<string>
@@ -89,6 +100,18 @@ namespace Ticketing.ViewModels
         public AdminDashboardViewModel()
         {
             _context = new AppDbContext();
+            
+            // S'assurer que la base de données existe
+            try
+            {
+                _context.Database.EnsureCreated();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show($"Erreur d'initialisation de la base de données: {ex.Message}", 
+                    "Erreur", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+            }
+            
             Tickets = new ObservableCollection<Ticket>();
             SelectedStatus = "Tous les statuts";
             
@@ -168,7 +191,7 @@ namespace Ticketing.ViewModels
 
         private void Logout()
         {
-            // Logique de déconnexion à implémenter dans la vue
+            LogoutRequested = true;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

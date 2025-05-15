@@ -14,8 +14,7 @@ namespace Ticketing.Views
         public AdminDashboardView()
         {
             InitializeComponent();
-            _viewModel = new AdminDashboardViewModel();
-            DataContext = _viewModel;
+            _viewModel = DataContext as AdminDashboardViewModel ?? new AdminDashboardViewModel();
             
             // Ajouter la gestion de la déconnexion
             _viewModel.PropertyChanged += (sender, args) => {

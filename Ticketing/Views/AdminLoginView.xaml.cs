@@ -6,7 +6,6 @@ using System.Windows.Controls;
 using Ticketing.Data;
 using Ticketing.Models;
 using Microsoft.EntityFrameworkCore;
-using YourProject.Views;
 
 namespace Ticketing.Views
 {
@@ -19,6 +18,9 @@ namespace Ticketing.Views
         public AdminLoginView()
         {
             InitializeComponent();
+            DataContext = this;
+            
+            // Initialiser le contexte de BDD
             _context = new AppDbContext();
             
             try
@@ -28,20 +30,46 @@ namespace Ticketing.Views
                 if (wasCreated)
                 {
                     MessageBox.Show("Base de données créée avec succès.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-                
-                // Vérifiez si les migrations sont à jour
-                if (_context.Database.GetPendingMigrations().Any())
-                {
-                    _context.Database.Migrate();
+                    
+                    // Créer un compte admin par défaut si la BDD vient d'être créée
+                    CreateDefaultAdmin();
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Erreur lors de la création de la base de données : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            
-            DataContext = this;
+        }
+        
+        private void CreateDefaultAdmin()
+        {
+            try
+            {
+                // Vérifier si un admin existe déjà
+                if (_context.Utilisateurs.Any(u => u.Rol == "Admin"))
+                    return;
+                
+                // Créer un compte admin par défaut
+                var defaultAdmin = new Utilisateur
+                {
+                    Nom = "Admin",
+                    Prenom = "System",
+                    Email = "admin@gmail.com",
+                    MDP = "admin123",
+                    Rol = "Admin"
+                };
+                
+                _context.Utilisateurs.Add(defaultAdmin);
+                _context.SaveChanges();
+                
+                MessageBox.Show("Compte administrateur par défaut créé.\nEmail: admin@gmail.com\nMot de passe: admin123", 
+                    "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erreur lors de la création du compte admin par défaut: {ex.Message}", 
+                    "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void OnLoginClicked(object sender, RoutedEventArgs e)
@@ -81,9 +109,8 @@ namespace Ticketing.Views
         {
             try
             {
-                // Ici nous utilisons le DbSet Utilisateurs (au lieu de Utilisateur)
                 return _context.Utilisateurs
-                    .Any(u => u.Email == email && u.MDP == password);
+                    .Any(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase) && u.MDP == password);
             }
             catch (Exception ex)
             {
@@ -155,8 +182,7 @@ namespace Ticketing.Views
 
             try
             {
-                // Ici nous utilisons le DbSet Utilisateurs (au lieu de Utilisateur)
-                bool exists = _context.Utilisateurs.Any(u => u.Email == email);
+                bool exists = _context.Utilisateurs.Any(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
                 if (exists)
                 {
                     ShowCreateError("Un compte avec cet email existe déjà.");
@@ -172,8 +198,8 @@ namespace Ticketing.Views
                     Rol = role
                 };
 
-                // Ici nous utilisons le DbSet Utilisateurs (au lieu de Utilisateur)
                 _context.Utilisateurs.Add(newUser);
+                
                 try
                 {
                     _context.SaveChanges();
