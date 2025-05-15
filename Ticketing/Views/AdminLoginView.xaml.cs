@@ -1,4 +1,3 @@
-// Modification d'AdminLoginView.xaml.cs pour assurer la création de la base de données
 using System;
 using System.Linq;
 using System.Windows;
@@ -20,7 +19,6 @@ namespace Ticketing.Views
             InitializeComponent();
             DataContext = this;
             
-            // Initialiser le contexte de BDD
             _context = new AppDbContext();
             
             try
@@ -109,8 +107,18 @@ namespace Ticketing.Views
         {
             try
             {
+                // Solution 1: Utiliser ToList() pour exécuter la requête côté client
+                var utilisateur = _context.Utilisateurs
+                    .ToList()
+                    .FirstOrDefault(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase) && u.MDP == password);
+                
+                return utilisateur != null;
+                
+                /* Solution 2: Réécrire la requête pour qu'elle soit compatible avec EF Core
                 return _context.Utilisateurs
-                    .Any(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase) && u.MDP == password);
+                    .Where(u => u.Email.ToLower() == email.ToLower() && u.MDP == password)
+                    .Any();
+                */
             }
             catch (Exception ex)
             {
@@ -182,7 +190,8 @@ namespace Ticketing.Views
 
             try
             {
-                bool exists = _context.Utilisateurs.Any(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
+                // Également mis à jour cette requête pour éviter le même problème
+                bool exists = _context.Utilisateurs.ToList().Any(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
                 if (exists)
                 {
                     ShowCreateError("Un compte avec cet email existe déjà.");
