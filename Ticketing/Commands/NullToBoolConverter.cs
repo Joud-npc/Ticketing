@@ -1,8 +1,9 @@
+// Modification du namespace du convertisseur NullToBoolConverter pour cohérence
 using System;
 using System.Globalization;
 using System.Windows.Data;
 
-namespace YourProject.Converters
+namespace Ticketing.Converters
 {
     public class NullToBoolConverter : IValueConverter
     {

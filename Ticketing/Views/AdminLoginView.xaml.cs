@@ -1,3 +1,4 @@
+// Modification d'AdminLoginView.xaml.cs pour assurer la création de la base de données
 using System;
 using System.Linq;
 using System.Windows;
@@ -22,7 +23,18 @@ namespace Ticketing.Views
             
             try
             {
-                _context.Database.EnsureCreated();
+                // Assurez-vous que la base de données est créée
+                bool wasCreated = _context.Database.EnsureCreated();
+                if (wasCreated)
+                {
+                    MessageBox.Show("Base de données créée avec succès.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                
+                // Vérifiez si les migrations sont à jour
+                if (_context.Database.GetPendingMigrations().Any())
+                {
+                    _context.Database.Migrate();
+                }
             }
             catch (Exception ex)
             {
@@ -69,7 +81,8 @@ namespace Ticketing.Views
         {
             try
             {
-                return _context.Utilisateur
+                // Ici nous utilisons le DbSet Utilisateurs (au lieu de Utilisateur)
+                return _context.Utilisateurs
                     .Any(u => u.Email == email && u.MDP == password);
             }
             catch (Exception ex)
@@ -142,7 +155,8 @@ namespace Ticketing.Views
 
             try
             {
-                bool exists = _context.Utilisateur.Any(u => u.Email == email);
+                // Ici nous utilisons le DbSet Utilisateurs (au lieu de Utilisateur)
+                bool exists = _context.Utilisateurs.Any(u => u.Email == email);
                 if (exists)
                 {
                     ShowCreateError("Un compte avec cet email existe déjà.");
@@ -158,7 +172,8 @@ namespace Ticketing.Views
                     Rol = role
                 };
 
-                _context.Utilisateur.Add(newUser);
+                // Ici nous utilisons le DbSet Utilisateurs (au lieu de Utilisateur)
+                _context.Utilisateurs.Add(newUser);
                 try
                 {
                     _context.SaveChanges();
@@ -176,6 +191,5 @@ namespace Ticketing.Views
                 MessageBox.Show($"Erreur lors de la création du compte : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
     }
 }

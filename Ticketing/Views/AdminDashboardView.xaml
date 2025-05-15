@@ -1,12 +1,20 @@
-<Window x:Class="YourProject.Views.AdminDashboardView"
+<Window x:Class="Ticketing.Views.AdminDashboardView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:viewModels="clr-namespace:Ticketing.ViewModels"
+        xmlns:converters="clr-namespace:YourProject.Converters"
+        xmlns:converters1="clr-namespace:Ticketing.Converters"
         Title="Tableau de bord Admin" Height="600" Width="1000"
         WindowStartupLocation="CenterScreen">
     
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <converters1:NullToBoolConverter x:Key="NullToBoolConverter"/>
     </Window.Resources>
+    
+    <Window.DataContext>
+        <viewModels:AdminDashboardViewModel/>
+    </Window.DataContext>
     
     <Grid>
         <Grid.RowDefinitions>
@@ -20,7 +28,7 @@
         <Grid Grid.Row="0" Background="#FFEEEEEE">
             <StackPanel Orientation="Horizontal" Margin="10">
                 <TextBlock Text="Tableau de bord administrateur" FontSize="20" FontWeight="Bold" VerticalAlignment="Center"/>
-                <Button Content="Déconnexion" HorizontalAlignment="Right" Margin="660,0,0,0" Padding="10,5"/>
+                <Button Content="Déconnexion" Command="{Binding LogoutCommand}" HorizontalAlignment="Right" Margin="660,0,0,0" Padding="10,5"/>
             </StackPanel>
         </Grid>
         
@@ -30,10 +38,9 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             
-            <TextBox Grid.Column="0" Margin="0,0,10,0" Padding="5" VerticalContentAlignment="Center">
+            <TextBox Grid.Column="0" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,10,0" Padding="5" VerticalContentAlignment="Center">
                 <TextBox.Style>
                     <Style TargetType="TextBox">
                         <Setter Property="Template">
@@ -57,19 +64,14 @@
                 </TextBox.Style>
             </TextBox>
             
-            <ComboBox Grid.Column="1" Width="150" Margin="0,0,10,0" Padding="5">
-                <ComboBoxItem Content="Tous les statuts"/>
-                <ComboBoxItem Content="Nouveau"/>
-                <ComboBoxItem Content="En cours"/>
-                <ComboBoxItem Content="Résolu"/>
-                <ComboBoxItem Content="Fermé"/>
-            </ComboBox>
+            <ComboBox Grid.Column="1" ItemsSource="{Binding Statuts}" SelectedItem="{Binding SelectedStatus}" Width="150" Margin="0,0,10,0" Padding="5"/>
             
-            <Button Grid.Column="2" Content="Rafraîchir" Padding="10,5" Margin="0,0,10,0"/>
+            <Button Grid.Column="2" Content="Rafraîchir" Command="{Binding RefreshCommand}" Padding="10,5" Margin="0,0,10,0"/>
         </Grid>
         
         <!-- Liste des tickets -->
-        <DataGrid Grid.Row="2" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False"
+        <DataGrid Grid.Row="2" ItemsSource="{Binding Tickets}" SelectedItem="{Binding SelectedTicket}" 
+                  AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False"
                   IsReadOnly="True" Margin="10" AlternatingRowBackground="AliceBlue">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Id_Ticket}" Width="50"/>
@@ -92,7 +94,8 @@
         </DataGrid>
         
         <!-- Détails et mise à jour du ticket -->
-        <Border Grid.Row="3" BorderBrush="LightGray" BorderThickness="0,1,0,0" Padding="10" Background="#F5F5F5">
+        <Border Grid.Row="3" BorderBrush="LightGray" BorderThickness="0,1,0,0" Padding="10" Background="#F5F5F5"
+                IsEnabled="{Binding SelectedTicket, Converter={StaticResource NullToBoolConverter}}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -101,15 +104,18 @@
                 
                 <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
                     <TextBlock Text="Modifier le statut : " VerticalAlignment="Center"/>
-                    <ComboBox Width="150" Margin="10,0">
-                        <ComboBoxItem Content="Nouveau"/>
-                        <ComboBoxItem Content="En cours"/>
-                        <ComboBoxItem Content="Résolu"/>
-                        <ComboBoxItem Content="Fermé"/>
+                    <ComboBox Width="150" Margin="10,0" ItemsSource="{Binding Statuts}" SelectedItem="{Binding NewStatus}"
+                              SelectedIndex="0">
+                        <ComboBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel />
+                            </ItemsPanelTemplate>
+                        </ComboBox.ItemsPanel>
                     </ComboBox>
                 </StackPanel>
                 
-                <Button Grid.Column="1" Content="Mettre à jour" Padding="10,5"/>
+                <Button Grid.Column="1" Content="Mettre à jour" Command="{Binding UpdateStatusCommand}" 
+                        Padding="10,5" IsEnabled="{Binding SelectedTicket, Converter={StaticResource NullToBoolConverter}}"/>
             </Grid>
         </Border>
     </Grid>
