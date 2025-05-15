@@ -26,4 +26,21 @@
       <PackageReference Include="Vintasoft.Imaging.Wpf.UI" Version="14.0.11.1" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="Resources\game-5.png" />
+      <Resource Include="Resources\game-5.png" />
+      <None Remove="Resources\solar_letter-bold (2).png" />
+      <Resource Include="Resources\solar_letter-bold (2).png" />
+      <None Remove="Resources\Calque 1.png" />
+      <Resource Include="Resources\Calque 1.png" />
+      <None Remove="Resources\Group.png" />
+      <Resource Include="Resources\Group.png" />
+      <None Remove="Resources\Fonte\HARRYP__.TTF" />
+      <Resource Include="Resources\Fonte\HARRYP__.TTF">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Resource>
+      <None Remove="Resources\Fonte\SegoeUIVF.ttf" />
+      <Resource Include="Resources\Fonte\SegoeUIVF.ttf" />
+    </ItemGroup>
+
 </Project>

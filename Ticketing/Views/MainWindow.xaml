@@ -3,31 +3,133 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Ticketing.Views"
         xmlns:viewModels="clr-namespace:Ticketing.ViewModels"
         mc:Ignorable="d"
-        Title="Accueil Ticketing" Height="450" Width="800"
-        WindowStartupLocation="CenterScreen">
+        Title="Problemus Maxima"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized"
+        WindowStyle="None"
+        ResizeMode="NoResize">
 
     <Window.DataContext>
         <viewModels:MainViewModel />
     </Window.DataContext>
+    
+    <Window.Resources>
+        <Style x:Key="RoundedButtonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="15" Background="#8B5E3C" BorderBrush="#BF8A60" BorderThickness="1">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20,10"/>
+                            <Border.Effect>
+                                <DropShadowEffect Color="Black" BlurRadius="10" ShadowDepth="5" Opacity="0.5"/>
+                            </Border.Effect>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="22"/>
+            <Setter Property="Width" Value="550"/>
+            <Setter Property="Height" Value="80"/>
+            <Setter Property="Margin" Value="15"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        
+        <Style x:Key="CloseButtonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="Transparent" Padding="5">
+                            <TextBlock Text="✕" Foreground="White" FontSize="18"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+    </Window.Resources>
 
     <Grid>
-        <Grid Height="100" VerticalAlignment="Top" Background="#FFEEEEEE">
-            <Border Width="150" Height="80" Margin="10" Background="LightGray" HorizontalAlignment="Left" VerticalAlignment="Center">
-                <TextBlock Text="LOGO" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
-            </Border>
-        </Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Resources/game-5.png" Stretch="UniformToFill" />
+        </Grid.Background>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0 0 0 40">
-            <Button Content="Envoyer un hibou"
-                    Width="200" Height="50" Margin="20"
-                    Command="{Binding OuvrirTicketCommand}"/>
+        <DockPanel Grid.Row="0" LastChildFill="False" Background="#0D1B3E">
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Left" VerticalAlignment="Center" Margin="20,0">
+                <Image Source="/Resources/Group.png" Width="50" Height="50" Margin="5"/>
+                <TextBlock Text="Problemus Maxima" 
+                           VerticalAlignment="Center"
+                           Foreground="White"
+                           FontSize="32"
+                           FontWeight="Bold"
+                           FontFamily="{StaticResource MagicFont}"/>
+            </StackPanel>
+            
+            <Button Style="{StaticResource CloseButtonStyle}" 
+                    DockPanel.Dock="Right" 
+                    Margin="0,0,20,0"
+                    Click="CloseButton_Click"/>
+        </DockPanel>
+               
+        <StackPanel Grid.Row="1"
+                    Orientation="Vertical"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+                    
+            <TextBlock Text="Bienvenue dans le monde magique" 
+                       Foreground="White" 
+                       FontSize="40" 
+                       FontFamily="{StaticResource MagicFont}"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,40">
+                <TextBlock.Effect>
+                    <DropShadowEffect Color="Black" BlurRadius="5" ShadowDepth="3" Opacity="0.7"/>
+                </TextBlock.Effect>
+            </TextBlock>
+        
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Style="{StaticResource RoundedButtonStyle}"
+                        Command="{Binding OuvrirTicketCommand}">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="Lettre pour Poudlard"
+                                   FontSize="26"
+                                   FontFamily="{StaticResource MagicFont}"
+                                   VerticalAlignment="Center"/>
+                        <Image Source="/Resources/solar_letter-bold (2).png" Width="40" Height="40" Margin="15,0,0,0"/>
+                    </StackPanel>
+                </Button>
 
-            <Button Content="Admin Login"
-                    Width="200" Height="50" Margin="20"
-                    Command="{Binding OpenAdminLoginCommand}"/>
+                <Button Style="{StaticResource RoundedButtonStyle}"
+                        Command="{Binding OpenAdminLoginCommand}">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="Connexion au Portail du Sorcier"
+                                   FontSize="26"
+                                   FontFamily="{StaticResource MagicFont}"
+                                   VerticalAlignment="Center"/>
+                        <Image Source="/Resources/Calque 1.png" Width="40" Height="40" Margin="15,0,0,0"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
         </StackPanel>
+        
+        <TextBlock Grid.Row="1"
+                   Text="© Poudlard - Tous droits réservés par le Ministère de la Magie"
+                   Foreground="#CCCCCC"
+                   FontSize="12"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Bottom"
+                   Margin="0,0,0,15"/>
     </Grid>
 </Window>

@@ -11,5 +11,10 @@ namespace Ticketing.Views
             InitializeComponent();
             DataContext = new MainViewModel();
         }
+        
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

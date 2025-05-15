@@ -160,3 +160,4 @@ C:\Users\pepit\RiderProjects\Ticketing\Ticketing\bin\Debug\net8.0-windows\Vintas
 C:\Users\pepit\RiderProjects\Ticketing\Ticketing\bin\Debug\net8.0-windows\Vintasoft.Imaging.Wpf.dll
 C:\Users\pepit\RiderProjects\Ticketing\Ticketing\bin\Debug\net8.0-windows\Vintasoft.Imaging.Wpf.UI.dll
 C:\Users\pepit\RiderProjects\Ticketing\Ticketing\bin\Debug\net8.0-windows\Vintasoft.Shared.dll
+C:\Users\pepit\RiderProjects\Ticketing\Ticketing\obj\Debug\net8.0-windows\App.baml
