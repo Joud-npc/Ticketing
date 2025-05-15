@@ -1,4 +1,3 @@
-// ViewModel pour AdminDashboard pour afficher et gérer les tickets
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -101,7 +100,6 @@ namespace Ticketing.ViewModels
         {
             _context = new AppDbContext();
             
-            // S'assurer que la base de données existe
             try
             {
                 _context.Database.EnsureCreated();
@@ -129,13 +127,11 @@ namespace Ticketing.ViewModels
             {
                 var query = _context.Tickets.AsQueryable();
 
-                // Filtrer par statut si nécessaire
                 if (SelectedStatus != null && SelectedStatus != "Tous les statuts")
                 {
                     query = query.Where(t => t.Statut == SelectedStatus);
                 }
 
-                // Filtrer par texte de recherche si nécessaire
                 if (!string.IsNullOrWhiteSpace(SearchText))
                 {
                     string searchLower = SearchText.ToLower();
@@ -146,7 +142,6 @@ namespace Ticketing.ViewModels
                     );
                 }
 
-                // Charger la liste des tickets et les trier par date (plus récents en premier)
                 var ticketList = query.OrderByDescending(t => t.DateCreation).ToList();
                 
                 Tickets.Clear();
@@ -169,14 +164,12 @@ namespace Ticketing.ViewModels
 
             try
             {
-                // Récupérer le ticket depuis la base de données
                 var ticket = _context.Tickets.Find(SelectedTicket.Id_Ticket);
                 if (ticket != null)
                 {
                     ticket.Statut = NewStatus;
                     _context.SaveChanges();
                     
-                    // Mettre à jour l'affichage
                     SelectedTicket.Statut = NewStatus;
                     System.Windows.MessageBox.Show("Statut du ticket mis à jour avec succès.", 
                         "Succès", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);

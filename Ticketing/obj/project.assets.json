@@ -1601,6 +1601,108 @@
             "rid": "win"
           }
         }
+      },
+      "Vintasoft.Imaging/14.0.11.1": {
+        "type": "package",
+        "dependencies": {
+          "Vintasoft.Shared": "[4.4.0.1]"
+        },
+        "compile": {
+          "lib/net8.0/Vintasoft.Imaging.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/Vintasoft.Imaging.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Vintasoft.Imaging.Gdi/14.0.11.1": {
+        "type": "package",
+        "dependencies": {
+          "Vintasoft.Imaging": "[14.0.11.1]",
+          "Vintasoft.Shared": "[4.4.0.1]"
+        },
+        "compile": {
+          "lib/net8.0/Vintasoft.Imaging.Gdi.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/Vintasoft.Imaging.Gdi.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Vintasoft.Imaging.UI/14.0.11.1": {
+        "type": "package",
+        "dependencies": {
+          "Vintasoft.Imaging": "[14.0.11.1]",
+          "Vintasoft.Imaging.Gdi": "[14.0.11.1]",
+          "Vintasoft.Shared": "[4.4.0.1]"
+        },
+        "compile": {
+          "lib/net8.0/Vintasoft.Imaging.UI.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/Vintasoft.Imaging.UI.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Vintasoft.Imaging.Wpf/14.0.11.1": {
+        "type": "package",
+        "dependencies": {
+          "Vintasoft.Imaging": "[14.0.11.1]",
+          "Vintasoft.Imaging.Gdi": "[14.0.11.1]",
+          "Vintasoft.Shared": "[4.4.0.1]"
+        },
+        "compile": {
+          "lib/net8.0/Vintasoft.Imaging.Wpf.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/Vintasoft.Imaging.Wpf.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Vintasoft.Imaging.Wpf.UI/14.0.11.1": {
+        "type": "package",
+        "dependencies": {
+          "Vintasoft.Imaging": "[14.0.11.1]",
+          "Vintasoft.Imaging.Gdi": "[14.0.11.1]",
+          "Vintasoft.Imaging.UI": "[14.0.11.1]",
+          "Vintasoft.Imaging.Wpf": "[14.0.11.1]",
+          "Vintasoft.Shared": "[4.4.0.1]"
+        },
+        "compile": {
+          "lib/net8.0/Vintasoft.Imaging.Wpf.UI.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/Vintasoft.Imaging.Wpf.UI.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Vintasoft.Shared/4.4.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/Vintasoft.Shared.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/Vintasoft.Shared.dll": {
+            "related": ".xml"
+          }
+        }
       }
     }
   },
@@ -4712,13 +4814,145 @@
         "system.windows.extensions.nuspec",
         "useSharedDesignerContext.txt"
       ]
+    },
+    "Vintasoft.Imaging/14.0.11.1": {
+      "sha512": "lAnHJywV+H5657QKRpUWvFWmFQpQvf79fWFX2fdeaV91lyoafTp41NzvRCBZCGJ2FskTffdnF18TyGJ0yGFeMg==",
+      "type": "package",
+      "path": "vintasoft.imaging/14.0.11.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net35/Vintasoft.Imaging.dll",
+        "lib/net35/Vintasoft.Imaging.xml",
+        "lib/net472/Vintasoft.Imaging.dll",
+        "lib/net472/Vintasoft.Imaging.xml",
+        "lib/net7.0/Vintasoft.Imaging.dll",
+        "lib/net7.0/Vintasoft.Imaging.xml",
+        "lib/net8.0/Vintasoft.Imaging.dll",
+        "lib/net8.0/Vintasoft.Imaging.xml",
+        "lib/net9.0/Vintasoft.Imaging.dll",
+        "lib/net9.0/Vintasoft.Imaging.xml",
+        "vintasoft.imaging.14.0.11.1.nupkg.sha512",
+        "vintasoft.imaging.nuspec"
+      ]
+    },
+    "Vintasoft.Imaging.Gdi/14.0.11.1": {
+      "sha512": "46HvbZS48kZCQW1np+b2syh8mSNSQ/QhZd4TLKJNVsiH0aTioGlurKK0fSyPbK6lZOpXfFEeU3MWd7YB/r2dBA==",
+      "type": "package",
+      "path": "vintasoft.imaging.gdi/14.0.11.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net35/Vintasoft.Imaging.Gdi.dll",
+        "lib/net35/Vintasoft.Imaging.Gdi.xml",
+        "lib/net472/Vintasoft.Imaging.Gdi.dll",
+        "lib/net472/Vintasoft.Imaging.Gdi.xml",
+        "lib/net7.0/Vintasoft.Imaging.Gdi.dll",
+        "lib/net7.0/Vintasoft.Imaging.Gdi.xml",
+        "lib/net8.0/Vintasoft.Imaging.Gdi.dll",
+        "lib/net8.0/Vintasoft.Imaging.Gdi.xml",
+        "lib/net9.0/Vintasoft.Imaging.Gdi.dll",
+        "lib/net9.0/Vintasoft.Imaging.Gdi.xml",
+        "vintasoft.imaging.gdi.14.0.11.1.nupkg.sha512",
+        "vintasoft.imaging.gdi.nuspec"
+      ]
+    },
+    "Vintasoft.Imaging.UI/14.0.11.1": {
+      "sha512": "Z0KDhZiJOslH8EBjggSMSiqbLZTqA6Uhfi0DfX31I1fL2+avp8TCprLkyYBWfvqZtACmyddEhIJ8NFMjOa2thw==",
+      "type": "package",
+      "path": "vintasoft.imaging.ui/14.0.11.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net35/Vintasoft.Imaging.UI.dll",
+        "lib/net35/Vintasoft.Imaging.UI.xml",
+        "lib/net472/Vintasoft.Imaging.UI.dll",
+        "lib/net472/Vintasoft.Imaging.UI.xml",
+        "lib/net7.0/Vintasoft.Imaging.UI.dll",
+        "lib/net7.0/Vintasoft.Imaging.UI.xml",
+        "lib/net8.0/Vintasoft.Imaging.UI.dll",
+        "lib/net8.0/Vintasoft.Imaging.UI.xml",
+        "lib/net9.0/Vintasoft.Imaging.UI.dll",
+        "lib/net9.0/Vintasoft.Imaging.UI.xml",
+        "vintasoft.imaging.ui.14.0.11.1.nupkg.sha512",
+        "vintasoft.imaging.ui.nuspec"
+      ]
+    },
+    "Vintasoft.Imaging.Wpf/14.0.11.1": {
+      "sha512": "icgIoeA5mH8PcEHn0f6/ev6gAofav6lt3sCEz0T+6T3dP3kp4x3FscyY3U8LRRje0nzMDDULxKivcb9WOYZe5w==",
+      "type": "package",
+      "path": "vintasoft.imaging.wpf/14.0.11.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net35/Vintasoft.Imaging.Wpf.dll",
+        "lib/net35/Vintasoft.Imaging.Wpf.xml",
+        "lib/net472/Vintasoft.Imaging.Wpf.dll",
+        "lib/net472/Vintasoft.Imaging.Wpf.xml",
+        "lib/net7.0/Vintasoft.Imaging.Wpf.dll",
+        "lib/net7.0/Vintasoft.Imaging.Wpf.xml",
+        "lib/net8.0/Vintasoft.Imaging.Wpf.dll",
+        "lib/net8.0/Vintasoft.Imaging.Wpf.xml",
+        "lib/net9.0/Vintasoft.Imaging.Wpf.dll",
+        "lib/net9.0/Vintasoft.Imaging.Wpf.xml",
+        "vintasoft.imaging.wpf.14.0.11.1.nupkg.sha512",
+        "vintasoft.imaging.wpf.nuspec"
+      ]
+    },
+    "Vintasoft.Imaging.Wpf.UI/14.0.11.1": {
+      "sha512": "8GTbcjTa2S3mgZJR5LhInn0aOeSpvUbZCQ8sexCPvGcEIy+L9kxRLaAaWctl3Iaifjh4lmiNfL1lem4e9eNgFw==",
+      "type": "package",
+      "path": "vintasoft.imaging.wpf.ui/14.0.11.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net35/Vintasoft.Imaging.Wpf.UI.dll",
+        "lib/net35/Vintasoft.Imaging.Wpf.UI.xml",
+        "lib/net472/Vintasoft.Imaging.Wpf.UI.dll",
+        "lib/net472/Vintasoft.Imaging.Wpf.UI.xml",
+        "lib/net7.0/Vintasoft.Imaging.Wpf.UI.dll",
+        "lib/net7.0/Vintasoft.Imaging.Wpf.UI.xml",
+        "lib/net8.0/Vintasoft.Imaging.Wpf.UI.dll",
+        "lib/net8.0/Vintasoft.Imaging.Wpf.UI.xml",
+        "lib/net9.0/Vintasoft.Imaging.Wpf.UI.dll",
+        "lib/net9.0/Vintasoft.Imaging.Wpf.UI.xml",
+        "vintasoft.imaging.wpf.ui.14.0.11.1.nupkg.sha512",
+        "vintasoft.imaging.wpf.ui.nuspec"
+      ]
+    },
+    "Vintasoft.Shared/4.4.0.1": {
+      "sha512": "CeWxyhiG4/SjqRy1Sp6zavDzyuBYDXsaPqxbXVX0xwJ/5YAVYULmX7A7QnE2MAGBny5KKnKt79n8uqms6X2FlQ==",
+      "type": "package",
+      "path": "vintasoft.shared/4.4.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net35/Vintasoft.Shared.dll",
+        "lib/net35/Vintasoft.Shared.xml",
+        "lib/net472/Vintasoft.Shared.dll",
+        "lib/net472/Vintasoft.Shared.xml",
+        "lib/net7.0/Vintasoft.Shared.dll",
+        "lib/net7.0/Vintasoft.Shared.xml",
+        "lib/net8.0/Vintasoft.Shared.dll",
+        "lib/net8.0/Vintasoft.Shared.xml",
+        "lib/net9.0/Vintasoft.Shared.dll",
+        "lib/net9.0/Vintasoft.Shared.xml",
+        "vintasoft.shared.4.4.0.1.nupkg.sha512",
+        "vintasoft.shared.nuspec"
+      ]
     }
   },
   "projectFileDependencyGroups": {
     "net8.0-windows7.0": [
       "Microsoft.EntityFrameworkCore >= 9.0.4",
       "Microsoft.EntityFrameworkCore.SqlServer >= 9.0.4",
-      "Microsoft.EntityFrameworkCore.Tools >= 9.0.4"
+      "Microsoft.EntityFrameworkCore.Tools >= 9.0.4",
+      "Vintasoft.Imaging.Wpf.UI >= 14.0.11.1"
     ]
   },
   "packageFolders": {
@@ -4776,6 +5010,10 @@
             "suppressParent": "All",
             "target": "Package",
             "version": "[9.0.4, )"
+          },
+          "Vintasoft.Imaging.Wpf.UI": {
+            "target": "Package",
+            "version": "[14.0.11.1, )"
           }
         },
         "imports": [

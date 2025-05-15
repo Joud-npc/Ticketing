@@ -154,3 +154,9 @@ C:\Users\pepit\RiderProjects\Ticketing\Ticketing\obj\Debug\net8.0-windows\Views\
 C:\Users\pepit\RiderProjects\Ticketing\Ticketing\obj\Debug\net8.0-windows\Views\AdminLoginView.g.cs
 C:\Users\pepit\RiderProjects\Ticketing\Ticketing\obj\Debug\net8.0-windows\Views\CreateAccountView.g.cs
 C:\Users\pepit\RiderProjects\Ticketing\Ticketing\obj\Debug\net8.0-windows\Views\CreateAccountView.baml
+C:\Users\pepit\RiderProjects\Ticketing\Ticketing\bin\Debug\net8.0-windows\Vintasoft.Imaging.dll
+C:\Users\pepit\RiderProjects\Ticketing\Ticketing\bin\Debug\net8.0-windows\Vintasoft.Imaging.Gdi.dll
+C:\Users\pepit\RiderProjects\Ticketing\Ticketing\bin\Debug\net8.0-windows\Vintasoft.Imaging.UI.dll
+C:\Users\pepit\RiderProjects\Ticketing\Ticketing\bin\Debug\net8.0-windows\Vintasoft.Imaging.Wpf.dll
+C:\Users\pepit\RiderProjects\Ticketing\Ticketing\bin\Debug\net8.0-windows\Vintasoft.Imaging.Wpf.UI.dll
+C:\Users\pepit\RiderProjects\Ticketing\Ticketing\bin\Debug\net8.0-windows\Vintasoft.Shared.dll

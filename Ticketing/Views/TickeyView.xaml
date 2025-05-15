@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:Ticketing.Views"
         xmlns:commands="clr-namespace:Ticketing.Commands"
-        Title="Créer un ticket" Height="450" Width="400"
+        Title="Envoyé un hibout" Height="450" Width="400"
         WindowStartupLocation="CenterScreen">
     
     <Grid Margin="10">
@@ -21,15 +21,17 @@
             <TextBox Text="{Binding Prenom}" Margin="0,5"/>
 
             <TextBlock Text="Email" />
-            <TextBox Margin="0">
+            <TextBox Margin="0,5">
                 <TextBox.Text>
                     <Binding Path="Email" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" ValidatesOnExceptions="True">
                         <Binding.ValidationRules>
-                            <commands:GmailValidationRule />
+                            <commands:HogwartsEmailValidationRule />
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>
             </TextBox>
+            <TextBlock Text="Email doit se terminer par @gryffondor.hp, @poufsouffle.hp, @serdaigle.hp ou @serpentard.hp" 
+                       FontSize="10" Foreground="Gray" Margin="0,2,0,5"/>
 
             <TextBlock Text="Catégorie" />
             <ComboBox ItemsSource="{Binding Categories}" SelectedItem="{Binding Categorie}" Margin="0,5"/>

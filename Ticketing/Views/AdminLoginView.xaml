@@ -14,11 +14,13 @@
                         <TextBox.Text>
                             <Binding Path="Email" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" ValidatesOnExceptions="True">
                                 <Binding.ValidationRules>
-                                    <commands:GmailValidationRule />
+                                    <commands:HogwartsEmailValidationRule />
                                 </Binding.ValidationRules>
                             </Binding>
                         </TextBox.Text>
                     </TextBox>
+                    <TextBlock Text="Email doit se terminer par @gryffondor.hp, @poufsouffle.hp, @serdaigle.hp ou @serpentard.hp" 
+                               FontSize="10" Foreground="Gray" Margin="0,2,0,5"/>
 
                     <TextBlock Text="Mot de passe :" Margin="0,10,0,0"/>
                     <PasswordBox x:Name="PasswordBox" Margin="0,5"/>
@@ -44,11 +46,13 @@
                         <TextBox.Text>
                             <Binding Path="NewEmail" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" ValidatesOnExceptions="True">
                                 <Binding.ValidationRules>
-                                    <commands:GmailValidationRule />
+                                    <commands:HogwartsEmailValidationRule />
                                 </Binding.ValidationRules>
                             </Binding>
                         </TextBox.Text>
                     </TextBox>
+                    <TextBlock Text="Email doit se terminer par @gryffondor.hp, @poufsouffle.hp, @serdaigle.hp ou @serpentard.hp" 
+                               FontSize="10" Foreground="Gray" Margin="0,2,0,5"/>
 
                     <TextBlock Text="Mot de passe :" Margin="0,10,0,0"/>
                     <PasswordBox x:Name="CreatePasswordBox" Margin="0,5"/>

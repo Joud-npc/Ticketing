@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "aPGy54M9Rh8=",
+  "dgSpecHash": "RDsPx9unvEk=",
   "success": true,
   "projectFilePath": "C:\\Users\\pepit\\RiderProjects\\Ticketing\\Ticketing\\Ticketing.csproj",
   "expectedPackageFiles": [
@@ -82,7 +82,13 @@
     "C:\\Users\\pepit\\.nuget\\packages\\system.text.json\\9.0.4\\system.text.json.9.0.4.nupkg.sha512",
     "C:\\Users\\pepit\\.nuget\\packages\\system.threading.channels\\7.0.0\\system.threading.channels.7.0.0.nupkg.sha512",
     "C:\\Users\\pepit\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512",
-    "C:\\Users\\pepit\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512"
+    "C:\\Users\\pepit\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512",
+    "C:\\Users\\pepit\\.nuget\\packages\\vintasoft.imaging\\14.0.11.1\\vintasoft.imaging.14.0.11.1.nupkg.sha512",
+    "C:\\Users\\pepit\\.nuget\\packages\\vintasoft.imaging.gdi\\14.0.11.1\\vintasoft.imaging.gdi.14.0.11.1.nupkg.sha512",
+    "C:\\Users\\pepit\\.nuget\\packages\\vintasoft.imaging.ui\\14.0.11.1\\vintasoft.imaging.ui.14.0.11.1.nupkg.sha512",
+    "C:\\Users\\pepit\\.nuget\\packages\\vintasoft.imaging.wpf\\14.0.11.1\\vintasoft.imaging.wpf.14.0.11.1.nupkg.sha512",
+    "C:\\Users\\pepit\\.nuget\\packages\\vintasoft.imaging.wpf.ui\\14.0.11.1\\vintasoft.imaging.wpf.ui.14.0.11.1.nupkg.sha512",
+    "C:\\Users\\pepit\\.nuget\\packages\\vintasoft.shared\\4.4.0.1\\vintasoft.shared.4.4.0.1.nupkg.sha512"
   ],
   "logs": []
 }

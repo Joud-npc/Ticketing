@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using Ticketing.Commands;
 using Ticketing.Data;
 using Ticketing.Models;
 using Microsoft.EntityFrameworkCore;
@@ -47,12 +48,12 @@ namespace Ticketing.Views
                 if (_context.Utilisateurs.Any(u => u.Rol == "Admin"))
                     return;
                 
-                // Créer un compte admin par défaut
+                // Créer un compte admin par défaut avec le nouveau format d'email
                 var defaultAdmin = new Utilisateur
                 {
                     Nom = "Admin",
                     Prenom = "System",
-                    Email = "admin@gmail.com",
+                    Email = "admin@gryffondor.hp",
                     MDP = "admin123",
                     Rol = "Admin"
                 };
@@ -60,7 +61,7 @@ namespace Ticketing.Views
                 _context.Utilisateurs.Add(defaultAdmin);
                 _context.SaveChanges();
                 
-                MessageBox.Show("Compte administrateur par défaut créé.\nEmail: admin@gmail.com\nMot de passe: admin123", 
+                MessageBox.Show("Compte administrateur par défaut créé.\nEmail: admin@gryffondor.hp\nMot de passe: admin123", 
                     "Information", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
@@ -81,9 +82,9 @@ namespace Ticketing.Views
                 return;
             }
 
-            if (!ValidateEmail(email))
+            if (!ValidateHogwartsEmail(email))
             {
-                ShowError("L'adresse email doit se terminer par @gmail.com.");
+                ShowError("L'adresse email doit se terminer par @gryffondor.hp, @poufsouffle.hp, @serdaigle.hp ou @serpentard.hp");
                 return;
             }
 
@@ -98,9 +99,10 @@ namespace Ticketing.Views
             }
         }
 
-        private bool ValidateEmail(string email)
+        private bool ValidateHogwartsEmail(string email)
         {
-            return email.Trim().EndsWith("@gmail.com", StringComparison.OrdinalIgnoreCase);
+            return HogwartsEmailValidationRule.HogwartsHouses
+                .Any(house => email.Trim().EndsWith("@" + house, StringComparison.OrdinalIgnoreCase));
         }
 
         private bool VerifyCredentials(string email, string password)
@@ -113,12 +115,6 @@ namespace Ticketing.Views
                     .FirstOrDefault(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase) && u.MDP == password);
                 
                 return utilisateur != null;
-                
-                /* Solution 2: Réécrire la requête pour qu'elle soit compatible avec EF Core
-                return _context.Utilisateurs
-                    .Where(u => u.Email.ToLower() == email.ToLower() && u.MDP == password)
-                    .Any();
-                */
             }
             catch (Exception ex)
             {
@@ -176,9 +172,9 @@ namespace Ticketing.Views
                 return;
             }
 
-            if (!ValidateEmail(email))
+            if (!ValidateHogwartsEmail(email))
             {
-                ShowCreateError("L'adresse email doit se terminer par @gmail.com.");
+                ShowCreateError("L'adresse email doit se terminer par @gryffondor.hp, @poufsouffle.hp, @serdaigle.hp ou @serpentard.hp");
                 return;
             }
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
@@ -15,7 +16,7 @@ namespace Ticketing.ViewModels
         private string titre, description, nom, prenom, email, categorie;
         public ObservableCollection<string> Categories { get; set; } = new ObservableCollection<string>
         {
-            "Support Technique", "Facturation", "Demande générale", "Bug"
+            "Baguette", "Facturation", "Demande générale", "Bug"
         };
 
         public string Titre { get => titre; set { titre = value; OnPropertyChanged(); } }
@@ -46,9 +47,15 @@ namespace Ticketing.ViewModels
             }
 
             var trimmedEmail = Email.Trim();
-            if (!trimmedEmail.EndsWith("@gmail.com", StringComparison.OrdinalIgnoreCase))
+            
+            // Vérifier si l'email est au format Poudlard
+            bool isValidHogwartsEmail = HogwartsEmailValidationRule.HogwartsHouses
+                .Any(house => trimmedEmail.EndsWith("@" + house, StringComparison.OrdinalIgnoreCase));
+                
+            if (!isValidHogwartsEmail)
             {
-                MessageBox.Show("L'adresse email doit se terminer par @gmail.com.", "Email invalide", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("L'adresse email doit se terminer par @gryffondor.hp, @poufsouffle.hp, @serdaigle.hp ou @serpentard.hp", 
+                    "Email invalide", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
             

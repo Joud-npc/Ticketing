@@ -31,7 +31,6 @@
             </StackPanel>
         </Grid>
         
-        <!-- Filtres -->
         <Grid Grid.Row="1" Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -68,7 +67,6 @@
             <Button Grid.Column="2" Content="Rafraîchir" Command="{Binding RefreshCommand}" Padding="10,5" Margin="0,0,10,0"/>
         </Grid>
         
-        <!-- Liste des tickets -->
         <DataGrid Grid.Row="2" ItemsSource="{Binding Tickets}" SelectedItem="{Binding SelectedTicket}" 
                   AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False"
                   IsReadOnly="True" Margin="10" AlternatingRowBackground="AliceBlue">
@@ -92,7 +90,6 @@
             </DataGrid.Columns>
         </DataGrid>
         
-        <!-- Détails et mise à jour du ticket -->
         <Border Grid.Row="3" BorderBrush="LightGray" BorderThickness="0,1,0,0" Padding="10" Background="#F5F5F5"
                 IsEnabled="{Binding SelectedTicket, Converter={StaticResource NullToBoolConverter}}">
             <Grid>

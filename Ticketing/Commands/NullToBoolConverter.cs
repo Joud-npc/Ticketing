@@ -1,4 +1,3 @@
-// Modification du namespace du convertisseur NullToBoolConverter pour cohérence
 using System;
 using System.Globalization;
 using System.Windows.Data;

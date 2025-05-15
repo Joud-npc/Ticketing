@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using Ticketing.Commands;
 using Ticketing.Data;
 using Ticketing.Models;
 using Microsoft.EntityFrameworkCore;
@@ -43,9 +44,9 @@ namespace Ticketing.Views
                 return;
             }
 
-            if (!ValidateEmail(email))
+            if (!ValidateHogwartsEmail(email))
             {
-                ShowError("L'adresse email doit se terminer par @gmail.com.");
+                ShowError("L'adresse email doit se terminer par @gryffondor.hp, @poufsouffle.hp, @serdaigle.hp ou @serpentard.hp");
                 return;
             }
 
@@ -85,9 +86,10 @@ namespace Ticketing.Views
             }
         }
 
-        private bool ValidateEmail(string email)
+        private bool ValidateHogwartsEmail(string email)
         {
-            return email.Trim().EndsWith("@gmail.com", StringComparison.OrdinalIgnoreCase);
+            return HogwartsEmailValidationRule.HogwartsHouses
+                .Any(house => email.Trim().EndsWith("@" + house, StringComparison.OrdinalIgnoreCase));
         }
 
         private void ShowError(string message)

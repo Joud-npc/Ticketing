@@ -1,4 +1,3 @@
-// Modification de AppDbContext.cs
 using Ticketing.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -8,7 +7,7 @@ namespace Ticketing.Data
     public class AppDbContext : DbContext
     {
         public DbSet<Ticket> Tickets { get; set; }
-        public DbSet<Utilisateur> Utilisateurs { get; set; } // Renommé pour être cohérent avec le nom de table
+        public DbSet<Utilisateur> Utilisateurs { get; set; }
         
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -31,11 +30,9 @@ namespace Ticketing.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Configuration pour la table Ticket
             modelBuilder.Entity<Ticket>()
                 .HasKey(t => t.Id_Ticket);
                 
-            // Configuration pour la table Utilisateur
             modelBuilder.Entity<Utilisateur>()
                 .HasKey(u => u.Id_Utilisateur);
                 
@@ -51,7 +48,6 @@ namespace Ticketing.Data
                 .Property(u => u.Rol)
                 .IsRequired();
                 
-            // Vérifier que l'email est unique
             modelBuilder.Entity<Utilisateur>()
                 .HasIndex(u => u.Email)
                 .IsUnique();

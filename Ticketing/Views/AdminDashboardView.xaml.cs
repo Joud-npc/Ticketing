@@ -16,7 +16,6 @@ namespace Ticketing.Views
             InitializeComponent();
             _viewModel = DataContext as AdminDashboardViewModel ?? new AdminDashboardViewModel();
             
-            // Ajouter la gestion de la déconnexion
             _viewModel.PropertyChanged += (sender, args) => {
                 if (args.PropertyName == "LogoutRequested" && _viewModel.LogoutRequested)
                 {
