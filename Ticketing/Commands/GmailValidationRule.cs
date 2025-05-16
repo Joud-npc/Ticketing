@@ -8,7 +8,6 @@ using System.Windows.Controls;
 
 public class HogwartsEmailValidationRule : ValidationRule
 {
-    // Liste des domaines Poudlard autorisés
     public static readonly List<string> HogwartsHouses = new List<string>
     {
         "gryffondor.hp",
@@ -21,7 +20,6 @@ public class HogwartsEmailValidationRule : ValidationRule
     {
         string email = value as string ?? string.Empty;
 
-        // Vérifier si l'email se termine par l'un des domaines autorisés
         bool isValid = HogwartsHouses.Any(house => email.EndsWith("@" + house, StringComparison.OrdinalIgnoreCase));
 
         if (!isValid)

@@ -16,7 +16,7 @@ namespace Ticketing.ViewModels
         private string titre, description, nom, prenom, email, categorie;
         public ObservableCollection<string> Categories { get; set; } = new ObservableCollection<string>
         {
-            "Baguette", "Facturation", "Demande générale", "Bug"
+            "Baguette trop courte", "Balai Cassait", "Creatures invisibles", "Service Baguette"
         };
 
         public string Titre { get => titre; set { titre = value; OnPropertyChanged(); } }
@@ -48,7 +48,6 @@ namespace Ticketing.ViewModels
 
             var trimmedEmail = Email.Trim();
             
-            // Vérifier si l'email est au format Poudlard
             bool isValidHogwartsEmail = HogwartsEmailValidationRule.HogwartsHouses
                 .Any(house => trimmedEmail.EndsWith("@" + house, StringComparison.OrdinalIgnoreCase));
                 

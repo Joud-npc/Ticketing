@@ -1,10 +1,9 @@
 using System;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Ticketing.Data;
 using Ticketing.Models;
-using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Ticketing.Views
 {
@@ -16,8 +15,9 @@ namespace Ticketing.Views
         public CreateAccountView()
         {
             InitializeComponent();
-            _context = new AppDbContext();
             DataContext = this;
+            
+            _context = new AppDbContext();
         }
 
         private void OnCreateAccountClicked(object sender, RoutedEventArgs e)
@@ -27,25 +27,12 @@ namespace Ticketing.Views
             string email = EmailTextBox.Text;
             string password = PasswordBox.Password;
             string confirmPassword = ConfirmPasswordBox.Password;
-
-            if (RoleComboBox.SelectedItem == null)
-            {
-                ShowError("Veuillez sélectionner un rôle.");
-                return;
-            }
-
             string role = ((ComboBoxItem)RoleComboBox.SelectedItem).Content.ToString();
 
             if (string.IsNullOrWhiteSpace(nom) || string.IsNullOrWhiteSpace(prenom) ||
-                string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password) || string.IsNullOrWhiteSpace(confirmPassword))
+                string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
             {
                 ShowError("Tous les champs sont obligatoires.");
-                return;
-            }
-
-            if (!ValidateEmail(email))
-            {
-                ShowError("L'adresse email doit se terminer par @gmail.com.");
                 return;
             }
 
@@ -55,15 +42,20 @@ namespace Ticketing.Views
                 return;
             }
 
+            if (!ValidateHogwartsEmail(email))
+            {
+                ShowError("L'adresse email doit se terminer par @gryffondor.hp, @poufsouffle.hp, @serdaigle.hp ou @serpentard.hp");
+                return;
+            }
+
+            if (IsEmailAlreadyUsed(email))
+            {
+                ShowError("Cette adresse email est déjà utilisée.");
+                return;
+            }
+
             try
             {
-                bool exists = _context.Utilisateurs.Any(u => u.Email == email);
-                if (exists)
-                {
-                    ShowError("Un compte avec cet email existe déjà.");
-                    return;
-                }
-
                 var newUser = new Utilisateur
                 {
                     Nom = nom,
@@ -75,19 +67,38 @@ namespace Ticketing.Views
 
                 _context.Utilisateurs.Add(newUser);
                 _context.SaveChanges();
-                
-                MessageBox.Show("Compte créé avec succès !", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
-                RetourVersLogin();
+
+                MessageBox.Show($"Compte créé avec succès pour {prenom} {nom}!", 
+                    "Création réussie", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                var loginView = new AdminLoginView();
+                loginView.Show();
+                this.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Erreur lors de la création du compte : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Erreur lors de la création du compte : {ex.Message}", 
+                    "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
-        private bool ValidateEmail(string email)
+        private bool ValidateHogwartsEmail(string email)
         {
-            return email.Trim().EndsWith("@gmail.com", StringComparison.OrdinalIgnoreCase);
+            return Commands.HogwartsEmailValidationRule.HogwartsHouses
+                .Any(house => email.Trim().EndsWith("@" + house, StringComparison.OrdinalIgnoreCase));
+        }
+
+        private bool IsEmailAlreadyUsed(string email)
+        {
+            try
+            {
+                return _context.Utilisateurs
+                    .Any(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         private void ShowError(string message)
@@ -96,16 +107,11 @@ namespace Ticketing.Views
             ErrorMessage.Visibility = Visibility.Visible;
         }
 
-        private void RetourVersLogin()
-        {
-            var loginWindow = new AdminLoginView();
-            loginWindow.Show();
-            this.Close();
-        }
-
         private void OnCancelClicked(object sender, RoutedEventArgs e)
         {
-            RetourVersLogin();
+            var loginView = new AdminLoginView();
+            loginView.Show();
+            this.Close();
         }
     }
 }

@@ -2,76 +2,172 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:commands="clr-namespace:Ticketing.Commands"
-        Title="Espace Utilisateur" Height="600" Width="400"
-        WindowStartupLocation="CenterScreen">
+        WindowState="Maximized"
+        WindowStyle="None"
+        Title="Portail du Sorcier" Height="600" Width="800"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
+
+    <Window.Resources>
+        <Style TargetType="TextBlock" x:Key="LabelStyle">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,0,10,0"/>
+        </Style>
+
+        <Style TargetType="Button" x:Key="HogwartsButtonStyle">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#A37A3C" Offset="0.0"/>
+                        <GradientStop Color="#8C5E26" Offset="1.0"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="/Resources/Fonte/HARRYP__.TTF#Harry P"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="Regular"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#D0A85C"/>
+            <Setter Property="Padding" Value="15,5"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="15">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="TextBlock" x:Key="LinkStyle">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="TextDecorations" Value="Underline"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+    </Window.Resources>
 
     <Grid>
-        <TabControl>
-            <TabItem Header="Connexion">
-                <StackPanel Margin="20" VerticalAlignment="Center">
-                    <TextBlock Text="Email :" />
-                    <TextBox x:Name="EmailTextBox" Margin="0,5">
-                        <TextBox.Text>
-                            <Binding Path="Email" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" ValidatesOnExceptions="True">
-                                <Binding.ValidationRules>
-                                    <commands:HogwartsEmailValidationRule />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                    </TextBox>
-                    <TextBlock Text="Email doit se terminer par @gryffondor.hp, @poufsouffle.hp, @serdaigle.hp ou @serpentard.hp" 
-                               FontSize="10" Foreground="Gray" Margin="0,2,0,5"/>
-
-                    <TextBlock Text="Mot de passe :" Margin="0,10,0,0"/>
-                    <PasswordBox x:Name="PasswordBox" Margin="0,5"/>
-
-                    <TextBlock x:Name="ErrorMessage" Foreground="Red" Visibility="Collapsed" Margin="0,10"/>
-
-                    <Button Content="Connexion" Click="OnLoginClicked" Margin="0,10" Height="30"/>
-                    <Button Content="Retour" Click="OnRetourClicked" Margin="0,10" Height="30"/>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Resources/game-5.png" Stretch="UniformToFill"/>
+        </Grid.Background>
+        
+        <Border Height="80" VerticalAlignment="Top" Background="#0D1B3E" Opacity="0.9">
+            <Grid>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0">
+                    <Image Source="/Resources/Group.png" Height="50"/>
+                    <TextBlock Text="Problemus Maxima" FontFamily="/Resources/Fonte/HARRYP__.TTF#Harry P" 
+                           FontSize="30" Foreground="White" VerticalAlignment="Center" Margin="10,0,0,0"/>
                 </StackPanel>
-            </TabItem>
+                
+                <TextBlock Text="Portail du Sorcier" 
+                           FontFamily="/Resources/Fonte/HARRYP__.TTF#Harry P"
+                           FontSize="32" Foreground="White" 
+                           HorizontalAlignment="Center" 
+                           VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
 
-            <TabItem Header="Créer un compte">
-                <StackPanel Margin="20" VerticalAlignment="Center">
+        <Border Background="#1E2547" CornerRadius="20"
+                HorizontalAlignment="Center" VerticalAlignment="Center"
+                Width="580" Height="450"
+                BorderBrush="#2A325A" BorderThickness="2"
+                Opacity="0.95"
+                Margin="0,100,0,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-                    <TextBlock Text="Nom :" />
-                    <TextBox x:Name="CreateNomTextBox" Margin="0,5"/>
+                <TextBlock Grid.Row="0" Text="Connexion au Portail du Sorcier" 
+                           FontFamily="/Resources/Fonte/HARRYP__.TTF#Harry P"
+                           FontSize="36" Foreground="White" 
+                           HorizontalAlignment="Center" Margin="0,25,0,20"/>
 
-                    <TextBlock Text="Prénom :" />
-                    <TextBox x:Name="CreatePrenomTextBox" Margin="0,5"/>
+                <StackPanel Grid.Row="1" Width="450" Margin="0,0,0,0">
+                    <!-- Email (avec label à côté) -->
+                    <Grid Margin="0,10,0,15">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Email :" Style="{StaticResource LabelStyle}"/>
+                        <TextBox Grid.Column="1" x:Name="EmailTextBox" Height="40" Padding="10,0"
+                                 FontSize="16" Background="White" BorderThickness="0" VerticalContentAlignment="Center">
+                            <TextBox.Text>
+                                <Binding Path="Email" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" ValidatesOnExceptions="True">
+                                    <Binding.ValidationRules>
+                                        <commands:HogwartsEmailValidationRule />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                    </Grid>
 
-                    <TextBlock Text="Email :" />
-                    <TextBox x:Name="CreateEmailTextBox" Margin="0,5">
-                        <TextBox.Text>
-                            <Binding Path="NewEmail" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" ValidatesOnExceptions="True">
-                                <Binding.ValidationRules>
-                                    <commands:HogwartsEmailValidationRule />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                    </TextBox>
-                    <TextBlock Text="Email doit se terminer par @gryffondor.hp, @poufsouffle.hp, @serdaigle.hp ou @serpentard.hp" 
-                               FontSize="10" Foreground="Gray" Margin="0,2,0,5"/>
+                    <Grid Margin="0,10,0,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Mdp :" Style="{StaticResource LabelStyle}"/>
+                        <PasswordBox Grid.Column="1" x:Name="PasswordBox" Height="40"
+                                     FontSize="16" Background="White" BorderThickness="0" Padding="10,0" VerticalContentAlignment="Center"/>
+                    </Grid>
 
-                    <TextBlock Text="Mot de passe :" Margin="0,10,0,0"/>
-                    <PasswordBox x:Name="CreatePasswordBox" Margin="0,5"/>
+                    <TextBlock x:Name="ErrorMessage" Foreground="Red" Visibility="Collapsed" 
+                               HorizontalAlignment="Center" Margin="0,0,0,5"/>
 
-                    <TextBlock Text="Confirmer le mot de passe :" Margin="0,10,0,0"/>
-                    <PasswordBox x:Name="ConfirmPasswordBox" Margin="0,5"/>
-
-                    <TextBlock Text="Rôle :" Margin="0,10,0,0"/>
-                    <ComboBox x:Name="RoleComboBox" Margin="0,5">
-                        <ComboBoxItem Content="Admin" IsSelected="True"/>
-                        <ComboBoxItem Content="Utilisateur"/>
-                    </ComboBox>
-
-                    <TextBlock x:Name="CreateErrorMessage" Foreground="Red" Visibility="Collapsed" Margin="0,10"/>
-
-                    <Button Content="Créer le compte" Click="OnCreateAccountClicked" Margin="0,10" Height="30"/>
-                    <Button Content="Retour" Click="OnRetourClicked" Margin="0,10" Height="30"/>
+                    <Grid Margin="0,20,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        
+                        <Button Grid.Row="0" Height="38" Width="200"
+                                Style="{StaticResource HogwartsButtonStyle}"
+                                Click="OnLoginClicked" Margin="0,0,0,20" HorizontalAlignment="Center">
+                            <TextBlock Text="Alohomora" FontFamily="NormalFont" FontSize="22"/>
+                        </Button>
+                        
+                        <Button Grid.Row="1" Height="38" Width="200"
+                                Style="{StaticResource HogwartsButtonStyle}" 
+                                Click="OnRetourClicked" HorizontalAlignment="Center" Margin="0,0,0,15">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Retour" FontFamily="NormalFont" FontSize="22"/>
+                                <Path Data="M8,0 L0,8 L8,16" 
+                                      Stroke="White" 
+                                      StrokeThickness="2"
+                                      Margin="10,0,0,0"
+                                      VerticalAlignment="Center"
+                                      HorizontalAlignment="Center"
+                                      Stretch="Uniform"
+                                      Height="12"/>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
                 </StackPanel>
-            </TabItem>
-        </TabControl>
+
+                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,25">
+                    <TextBlock Text="Nouvelle recrue a Poudlard? " Foreground="White" FontFamily="/Resources/Fonte/HARRYP__.TTF#Harry P" FontSize="18"/>
+                    <TextBlock x:Name="InscriptionLink" Text="Inscrivez-vous" Style="{StaticResource LinkStyle}" FontFamily="/Resources/Fonte/HARRYP__.TTF#Harry P" FontSize="18">
+                        <TextBlock.InputBindings>
+                            <MouseBinding MouseAction="LeftClick" Command="{Binding InscriptionCommand}"/>
+                        </TextBlock.InputBindings>
+                    </TextBlock>
+                </StackPanel>
+            </Grid>
+        </Border>
     </Grid>
 </Window>

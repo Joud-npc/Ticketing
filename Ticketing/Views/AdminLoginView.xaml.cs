@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using Ticketing.Commands;
 using Ticketing.Data;
 using Ticketing.Models;
@@ -13,24 +14,27 @@ namespace Ticketing.Views
     {
         private readonly AppDbContext _context;
         public string Email { get; set; }
-        public string NewEmail { get; set; }
+        
+        public RelayCommand InscriptionCommand { get; private set; }
 
         public AdminLoginView()
         {
             InitializeComponent();
             DataContext = this;
             
+            InscriptionCommand = new RelayCommand(_ => OnInscriptionClicked());
+            
+            InscriptionLink.MouseLeftButtonDown += (s, e) => OnInscriptionClicked();
+            
             _context = new AppDbContext();
             
             try
             {
-                // Assurez-vous que la base de données est créée
                 bool wasCreated = _context.Database.EnsureCreated();
                 if (wasCreated)
                 {
                     MessageBox.Show("Base de données créée avec succès.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                     
-                    // Créer un compte admin par défaut si la BDD vient d'être créée
                     CreateDefaultAdmin();
                 }
             }
@@ -40,15 +44,21 @@ namespace Ticketing.Views
             }
         }
         
+        private void OnInscriptionClicked()
+        {
+            CreateAccountView createAccountView = new CreateAccountView();
+            createAccountView.Show();
+            
+            this.Close();
+        }
+        
         private void CreateDefaultAdmin()
         {
             try
             {
-                // Vérifier si un admin existe déjà
                 if (_context.Utilisateurs.Any(u => u.Rol == "Admin"))
                     return;
                 
-                // Créer un compte admin par défaut avec le nouveau format d'email
                 var defaultAdmin = new Utilisateur
                 {
                     Nom = "Admin",
@@ -109,7 +119,6 @@ namespace Ticketing.Views
         {
             try
             {
-                // Solution 1: Utiliser ToList() pour exécuter la requête côté client
                 var utilisateur = _context.Utilisateurs
                     .ToList()
                     .FirstOrDefault(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase) && u.MDP == password);
@@ -129,12 +138,6 @@ namespace Ticketing.Views
             ErrorMessage.Visibility = Visibility.Visible;
         }
         
-        private void ShowCreateError(string message)
-        {
-            CreateErrorMessage.Text = message;
-            CreateErrorMessage.Visibility = Visibility.Visible;
-        }
-
         private void OpenAdminDashboard()
         {
             var dashboard = new AdminDashboardView();
@@ -149,78 +152,9 @@ namespace Ticketing.Views
             this.Close();
         }
         
-        private void OnCreateAccountClicked(object sender, RoutedEventArgs e)
+        private void OpenInscriptionView()
         {
-            string nom = CreateNomTextBox.Text;
-            string prenom = CreatePrenomTextBox.Text;
-            string email = CreateEmailTextBox.Text;
-            string password = CreatePasswordBox.Password;
-            string confirmPassword = ConfirmPasswordBox.Password;
-
-            if (RoleComboBox.SelectedItem == null)
-            {
-                ShowCreateError("Veuillez sélectionner un rôle.");
-                return;
-            }
-
-            string role = ((ComboBoxItem)RoleComboBox.SelectedItem).Content.ToString();
-
-            if (string.IsNullOrWhiteSpace(nom) || string.IsNullOrWhiteSpace(prenom) ||
-                string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password) || string.IsNullOrWhiteSpace(confirmPassword))
-            {
-                ShowCreateError("Tous les champs sont obligatoires.");
-                return;
-            }
-
-            if (!ValidateHogwartsEmail(email))
-            {
-                ShowCreateError("L'adresse email doit se terminer par @gryffondor.hp, @poufsouffle.hp, @serdaigle.hp ou @serpentard.hp");
-                return;
-            }
-
-            if (password != confirmPassword)
-            {
-                ShowCreateError("Les mots de passe ne correspondent pas.");
-                return;
-            }
-
-            try
-            {
-                // Également mis à jour cette requête pour éviter le même problème
-                bool exists = _context.Utilisateurs.ToList().Any(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
-                if (exists)
-                {
-                    ShowCreateError("Un compte avec cet email existe déjà.");
-                    return;
-                }
-
-                var newUser = new Utilisateur
-                {
-                    Nom = nom,
-                    Prenom = prenom,
-                    Email = email,
-                    MDP = password,
-                    Rol = role
-                };
-
-                _context.Utilisateurs.Add(newUser);
-                
-                try
-                {
-                    _context.SaveChanges();
-                    MessageBox.Show("Compte créé avec succès !", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
-                    OpenAdminDashboard();
-                }
-                catch (DbUpdateException dbEx)
-                {
-                    var innerEx = dbEx.InnerException?.Message ?? dbEx.Message;
-                    MessageBox.Show($"Erreur de base de données : {innerEx}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Erreur lors de la création du compte : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            OnInscriptionClicked();
         }
     }
 }
