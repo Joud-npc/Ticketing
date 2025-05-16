@@ -3,12 +3,170 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:viewModels="clr-namespace:Ticketing.ViewModels"
         xmlns:converters="clr-namespace:Ticketing.Converters"
-        Title="Tableau de bord Admin" Height="600" Width="1000"
-        WindowStartupLocation="CenterScreen">
+        Title="Problemus Maxima - Admin" 
+        Height="800" Width="1200"
+        WindowState="Maximized"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
     
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <converters:NullToBoolConverter x:Key="NullToBoolConverter"/>
+        
+        <!-- Style pour les boutons d'action avec fond doré (style Harry Potter) -->
+        <Style x:Key="HogwartsButtonStyle" TargetType="Button">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#A37A3C" Offset="0.0"/>
+                        <GradientStop Color="#8C5E26" Offset="1.0"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="/Resources/Fonte/HARRYP__.TTF#Harry P"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="Regular"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#D0A85C"/>
+            <Setter Property="Padding" Value="15,5"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="15">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <!-- Style pour le bouton de déconnexion -->
+        <Style x:Key="DeconnexionButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#C41E3A"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="/Resources/Fonte/HARRYP__.TTF#Harry P"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Regular"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="12,6"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="15">
+                            <Grid>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <TextBlock Text="{TemplateBinding Content}" VerticalAlignment="Center"/>
+                                    <Path Data="M8.5,2L14,7.5 8.5,13 7.5,12 11,8.5H2V6.5H11L7.5,3z" 
+                                          Fill="White" Margin="8,0,0,0" 
+                                          Width="14" Height="10" Stretch="Uniform"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <!-- Style pour la barre de recherche -->
+        <Style x:Key="SearchBoxStyle" TargetType="TextBox">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="#333333"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="15">
+                            <Grid>
+                                <TextBlock Text="Rechercher par titre, nom, email..." 
+                                           Foreground="#888888" Margin="5,0,0,0" 
+                                           VerticalAlignment="Center"
+                                           Visibility="{Binding Text.IsEmpty, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                <ScrollViewer x:Name="PART_ContentHost" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <!-- Style pour ComboBox -->
+        <Style x:Key="HogwartsComboBoxStyle" TargetType="ComboBox">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="#333333"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="15">
+                            <Grid>
+                                <ContentPresenter ContentSource="SelectedItem" Margin="5,0,0,0"/>
+                                <ToggleButton IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" 
+                                              Focusable="False" ClickMode="Press" HorizontalAlignment="Right" Margin="0,0,5,0">
+                                    <ToggleButton.Template>
+                                        <ControlTemplate>
+                                            <Path Data="M0,0 L8,8 L16,0" Fill="#888888" Width="12" Height="6"/>
+                                        </ControlTemplate>
+                                    </ToggleButton.Template>
+                                </ToggleButton>
+                                <Popup IsOpen="{TemplateBinding IsDropDownOpen}" Placement="Bottom">
+                                    <Border Background="White" BorderThickness="1" BorderBrush="#D0A85C" CornerRadius="5">
+                                        <ItemsPresenter/>
+                                    </Border>
+                                </Popup>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <!-- Style pour DataGrid -->
+        <Style x:Key="HogwartsDataGridStyle" TargetType="DataGrid">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="#D0A85C"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="RowBackground" Value="#1E2547"/>
+            <Setter Property="AlternatingRowBackground" Value="#2A325A"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="GridLinesVisibility" Value="Horizontal"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="#55D0A85C"/>
+            <Setter Property="VerticalGridLinesBrush" Value="#55D0A85C"/>
+            <Setter Property="HeadersVisibility" Value="Column"/>
+            <Setter Property="ColumnHeaderStyle">
+                <Setter.Value>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="Background" Value="#0D1B3E"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="FontFamily" Value="/Resources/Fonte/HARRYP__.TTF#Harry P"/>
+                        <Setter Property="FontSize" Value="16"/>
+                        <Setter Property="Padding" Value="8"/>
+                        <Setter Property="BorderThickness" Value="0,0,1,0"/>
+                        <Setter Property="BorderBrush" Value="#55D0A85C"/>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
     
     <Window.DataContext>
@@ -16,102 +174,145 @@
     </Window.DataContext>
     
     <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Resources/game-5.png" Stretch="UniformToFill"/>
+        </Grid.Background>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         
-        <!-- En-tête -->
-        <Grid Grid.Row="0" Background="#FFEEEEEE">
-            <StackPanel Orientation="Horizontal" Margin="10">
-                <TextBlock Text="Tableau de bord administrateur" FontSize="20" FontWeight="Bold" VerticalAlignment="Center"/>
-                <Button Content="Déconnexion" Command="{Binding LogoutCommand}" HorizontalAlignment="Right" Margin="660,0,0,0" Padding="10,5"/>
-            </StackPanel>
-        </Grid>
-        
-        <Grid Grid.Row="1" Margin="10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            
-            <TextBox Grid.Column="0" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,10,0" Padding="5" VerticalContentAlignment="Center">
-                <TextBox.Style>
-                    <Style TargetType="TextBox">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="TextBox">
-                                    <Border Background="{TemplateBinding Background}" 
-                                            BorderBrush="{TemplateBinding BorderBrush}"
-                                            BorderThickness="{TemplateBinding BorderThickness}">
-                                        <Grid>
-                                            <TextBlock Text="Rechercher par titre, nom, email..." 
-                                                       Foreground="Gray" Margin="5,0,0,0" 
-                                                       VerticalAlignment="Center"
-                                                       Visibility="{Binding Text.IsEmpty, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                                            <ScrollViewer x:Name="PART_ContentHost" Margin="5,0,0,0" VerticalAlignment="Center"/>
-                                        </Grid>
-                                    </Border>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </TextBox.Style>
-            </TextBox>
-            
-            <ComboBox Grid.Column="1" ItemsSource="{Binding Statuts}" SelectedItem="{Binding SelectedStatus}" Width="150" Margin="0,0,10,0" Padding="5"/>
-            
-            <Button Grid.Column="2" Content="Rafraîchir" Command="{Binding RefreshCommand}" Padding="10,5" Margin="0,0,10,0"/>
-        </Grid>
-        
-        <DataGrid Grid.Row="2" ItemsSource="{Binding Tickets}" SelectedItem="{Binding SelectedTicket}" 
-                  AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False"
-                  IsReadOnly="True" Margin="10" AlternatingRowBackground="AliceBlue">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding Id_Ticket}" Width="50"/>
-                <DataGridTextColumn Header="Titre" Binding="{Binding Titre}" Width="150"/>
-                <DataGridTextColumn Header="Nom" Binding="{Binding Nom}" Width="100"/>
-                <DataGridTextColumn Header="Prénom" Binding="{Binding Prenom}" Width="100"/>
-                <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="150"/>
-                <DataGridTextColumn Header="Catégorie" Binding="{Binding Categorie}" Width="120"/>
-                <DataGridTextColumn Header="Date de création" Binding="{Binding DateCreation, StringFormat=dd/MM/yyyy HH:mm}" Width="150"/>
-                <DataGridTextColumn Header="Statut" Binding="{Binding Statut}" Width="80"/>
-                <DataGridTemplateColumn Header="Description" Width="*">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Descriptions}" TextWrapping="Wrap" MaxHeight="40" 
-                                       TextTrimming="CharacterEllipsis" ToolTip="{Binding Descriptions}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
-        </DataGrid>
-        
-        <Border Grid.Row="3" BorderBrush="LightGray" BorderThickness="0,1,0,0" Padding="10" Background="#F5F5F5"
-                IsEnabled="{Binding SelectedTicket, Converter={StaticResource NullToBoolConverter}}">
+        <!-- En-tête avec style Harry Potter -->
+        <Border Grid.Row="0" Height="80" Background="#0D1B3E" Opacity="0.9">
             <Grid>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0">
+                    <Image Source="/Resources/Group.png" Height="50"/>
+                    <TextBlock Text="Problemus Maxima" FontFamily="/Resources/Fonte/HARRYP__.TTF#Harry P" 
+                             FontSize="30" Foreground="White" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                </StackPanel>
+                
+                <TextBlock Text="Portail du Sorcier - Administration" 
+                         FontFamily="/Resources/Fonte/HARRYP__.TTF#Harry P"
+                         FontSize="32" Foreground="White" 
+                         HorizontalAlignment="Center" 
+                         VerticalAlignment="Center"/>
+                <Button Content="Déconnexion" Command="{Binding LogoutCommand}" 
+                        Style="{StaticResource DeconnexionButtonStyle}"
+                        Height="30" Width="150"
+                        HorizontalAlignment="Right" VerticalAlignment="Center"
+                        Margin="0,0,20,0"/>
+            </Grid>
+        </Border>
+        
+        <!-- Contenu principal -->
+        <Grid Grid.Row="1" Margin="40">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <!-- Barre de recherche et boutons d'action -->
+            <Grid Grid.Row="0" Margin="0,0,0,20">
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <!-- Barre de recherche -->
+                <TextBox Grid.Column="0" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" 
+                         Style="{StaticResource SearchBoxStyle}" Margin="0,0,10,0">
+                    <TextBox.Effect>
+                        <DropShadowEffect BlurRadius="10" ShadowDepth="2" Opacity="0.3" Color="Black"/>
+                    </TextBox.Effect>
+                </TextBox>
+                
+                <!-- Bouton Rafraîchir -->
+                <Button Grid.Column="2" Command="{Binding RefreshCommand}" 
+                        Style="{StaticResource HogwartsButtonStyle}" Margin="5,0" Width="150">
+                    <Button.Effect>
+                        <DropShadowEffect BlurRadius="10" ShadowDepth="2" Opacity="0.3" Color="Black"/>
+                    </Button.Effect>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Rafraîchir" FontFamily="NormalFont" VerticalAlignment="Center"/>
+                        <Path Data="M16.82,17A7.5,7.5,0,1,1,19,12.69h2.11a9.64,9.64,0,1,0-2.92,6.86L16.82,17" 
+                              Fill="White" Width="14" Height="14" Stretch="Uniform" Margin="8,0,0,0"/>
+                    </StackPanel>
+                </Button>
+            </Grid>
+            
+            <!-- DataGrid pour les tickets -->
+            <Border Grid.Row="1" Background="#1E2547" Opacity="0.95" CornerRadius="15"
+                    BorderBrush="#2A325A" BorderThickness="2">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="15" ShadowDepth="5" Opacity="0.5" Color="Black"/>
+                </Border.Effect>
+                
+                <DataGrid ItemsSource="{Binding Tickets}" SelectedItem="{Binding SelectedTicket}" 
+                          AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False"
+                          IsReadOnly="True" Style="{StaticResource HogwartsDataGridStyle}"
+                          Margin="10">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID" Binding="{Binding Id_Ticket}" Width="50"/>
+                        <DataGridTextColumn Header="Titre" Binding="{Binding Titre}" Width="150"/>
+                        <DataGridTextColumn Header="Nom" Binding="{Binding Nom}" Width="100"/>
+                        <DataGridTextColumn Header="Prénom" Binding="{Binding Prenom}" Width="100"/>
+                        <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="150"/>
+                        <DataGridTextColumn Header="Catégorie" Binding="{Binding Categorie}" Width="120"/>
+                        <DataGridTextColumn Header="Date de création" Binding="{Binding DateCreation, StringFormat=dd/MM/yyyy HH:mm}" Width="150"/>
+                        <DataGridTextColumn Header="Statut" Binding="{Binding Statut}" Width="80"/>
+                        <DataGridTemplateColumn Header="Description" Width="*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Descriptions}" TextWrapping="Wrap" MaxHeight="40" 
+                                               TextTrimming="CharacterEllipsis" ToolTip="{Binding Descriptions}"
+                                               Foreground="White"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Border>
+        </Grid>
+        
+        <!-- Barre d'action en bas -->
+        <Border Grid.Row="2" Background="#0D1B3E" Opacity="0.9" Padding="10">
+            <Grid Margin="30,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 
-                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
-                    <TextBlock Text="Modifier le statut : " VerticalAlignment="Center"/>
-                    <ComboBox Width="150" Margin="10,0" ItemsSource="{Binding Statuts}" SelectedItem="{Binding NewStatus}"
-                              SelectedIndex="0">
-                        <ComboBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <VirtualizingStackPanel />
-                            </ItemsPanelTemplate>
-                        </ComboBox.ItemsPanel>
-                    </ComboBox>
-                </StackPanel>
+                <!-- Changer le statut -->
+                <TextBlock Grid.Column="0" Text="Changer le statut" 
+                           Foreground="White" FontSize="18" 
+                           FontFamily="/Resources/Fonte/HARRYP__.TTF#Harry P" 
+                           VerticalAlignment="Center"/>
                 
-                <Button Grid.Column="1" Content="Mettre à jour" Command="{Binding UpdateStatusCommand}" 
-                        Padding="10,5" IsEnabled="{Binding SelectedTicket, Converter={StaticResource NullToBoolConverter}}"/>
+                <!-- Combo box pour le statut -->
+                <ComboBox Grid.Column="1" Margin="15,0,0,0" Width="200" 
+                          ItemsSource="{Binding Statuts}" SelectedItem="{Binding NewStatus}"
+                          Style="{StaticResource HogwartsComboBoxStyle}">
+                    <ComboBox.Effect>
+                        <DropShadowEffect BlurRadius="10" ShadowDepth="2" Opacity="0.3" Color="Black"/>
+                    </ComboBox.Effect>
+                </ComboBox>
+                
+                <!-- Bouton Mettre à jour le statut -->
+                <Button Grid.Column="2" Command="{Binding UpdateStatusCommand}" 
+                        Style="{StaticResource HogwartsButtonStyle}"
+                        HorizontalAlignment="Left" Margin="15,0,0,0"
+                        Width="150" Height="30"
+                        IsEnabled="{Binding SelectedTicket, Converter={StaticResource NullToBoolConverter}}">
+                    <Button.Effect>
+                        <DropShadowEffect BlurRadius="10" ShadowDepth="2" Opacity="0.3" Color="Black"/>
+                    </Button.Effect>
+                    <TextBlock Text="Mettre à jour" FontFamily="NormalFont"/>
+                </Button>
             </Grid>
         </Border>
     </Grid>

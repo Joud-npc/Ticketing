@@ -88,7 +88,7 @@ namespace Ticketing.ViewModels
 
         public ObservableCollection<string> Statuts { get; } = new ObservableCollection<string>
         {
-            "Tous les statuts", "Ouvert", "En cours", "Résolu", "Fermé"
+            "Ouvert", "En cours", "Résolu"
         };
 
         public ICommand RefreshCommand { get; }
